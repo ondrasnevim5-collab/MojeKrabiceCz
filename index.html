@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MojeKrabiceCZ – Objednej si jídlo</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <div class="logo">
+    <span class="logo-icon">📦</span>
+    <div class="logo-text">
+      <span class="logo-small">služba</span>
+      <span class="logo-main">Moje<span class="logo-orange">Krabice</span><span class="logo-dark">CZ</span></span>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a href="#jidla">🍽️ Jídla</a>
+    <a href="#dezerty">🍰 Dezerty</a>
+    <a href="#snacky">🍟 Snacky</a>
+    <a href="#piti">🥤 Pití</a>
+  </nav>
+  <button class="cart-btn" id="cartToggle">
+    <span class="cart-icon">🛒</span>
+    <span>Košík</span>
+    <span class="cart-badge" id="cartCount">0</span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="hero-pill">🚀 Rychlé doručení · Čerstvé každý den</span>
+      <h1>Objednávej jídlo<br/><span class="hero-highlight">jednoduše & rychle</span></h1>
+      <p class="hero-sub">Vyber si z naší nabídky jídel, dezertů a snacků. Vše doručíme přímo k tvým dveřím.</p>
+      <a href="#jidla" class="hero-cta">Procházet nabídku →</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-box">
+        <span>📦</span>
+        <span>Moje<span style="color:var(--orange)">Krabice</span>CZ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JÍDLA -->
+<section class="section" id="jidla">
+  <div class="section-header">
+    <h2>🍽️ Hlavní jídla</h2>
+    <p>Čerstvě připravená denně</p>
+  </div>
+  <div class="products-grid" id="grid-jidla"></div>
+</section>
+
+<!-- DEZERTY -->
+<section class="section" id="dezerty">
+  <div class="section-header">
+    <h2>🍰 Dezerty</h2>
+    <p>Sladká tečka za každým jídlem</p>
+  </div>
+  <div class="products-grid" id="grid-dezerty"></div>
+</section>
+
+<!-- SNACKY -->
+<section class="section" id="snacky">
+  <div class="section-header">
+    <h2>🍟 Chipsy & Snacky</h2>
+    <p>Na zub kdykoliv</p>
+  </div>
+  <div class="products-grid" id="grid-snacky"></div>
+</section>
+
+<!-- PITÍ -->
+<section class="section" id="piti">
+  <div class="section-header">
+    <h2>🥤 Pití</h2>
+    <p>Osvěžení k objednávce</p>
+  </div>
+  <div class="products-grid" id="grid-piti"></div>
+</section>
+
+<!-- KOŠÍK PANEL -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>🛒 Tvůj košík</h3>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span>📦</span>
+      <p>Košík je prázdný</p>
+      <small>Přidej si něco dobrého!</small>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span>Celkem:</span>
+      <strong id="cartTotal">0 Kč</strong>
+    </div>
+    <button class="btn-screenshot" id="btnScreenshot">
+      📸 Stáhnout Screenshot
+    </button>
+  </div>
+</aside>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-main" style="font-size:1.2rem">Moje<span class="logo-orange">Krabice</span><span class="logo-dark">CZ</span></span>
+    <p>© 2025 MojeKrabiceCZ · Všechna práva vyhrazena</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
