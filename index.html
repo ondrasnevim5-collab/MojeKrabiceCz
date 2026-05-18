@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MojeKrabiceCZ – Objednej si jídlo</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="navbar" id="navbar">
+  <div class="logo">
+    <span class="logo-icon">📦</span>
+    <div class="logo-text">
+      <span class="logo-small">služba</span>
+      <span class="logo-main">Moje<span class="logo-orange">Krabice</span><span class="logo-dark">CZ</span></span>
+    </div>
+  </div>
+
+  <!-- Desktop nav -->
+  <nav class="nav-links" id="desktopNav">
+    <a href="#top-jidla">🏆 Top</a>
+    <a href="#jidla">🍽️ Jídla</a>
+    <a href="#dezerty">🍰 Dezerty</a>
+    <a href="#snacky">🍟 Snacky</a>
+    <a href="#piti">🥤 Pití</a>
+    <a href="#oblibene">❤️ Oblíbené</a>
+    <a href="#hodnoceni">⭐ Hodnocení</a>
+  </nav>
+
+  <!-- Desktop actions -->
+  <div class="navbar-actions">
+    <button class="icon-btn" id="darkToggle" title="Tmavý režim">🌙</button>
+    <button class="hours-btn" id="hoursToggle">
+      <span id="hoursStatusDot" class="hours-dot"></span>
+      <span class="hours-btn-text">Otevírací doba</span>
+    </button>
+    <button class="icon-btn" id="authBtn" title="Přihlásit se">👤</button>
+    <button class="cart-btn" id="cartToggle">
+      🛒 <span class="cart-badge" id="cartCount">0</span>
+    </button>
+    <button class="hamburger-btn" id="desktopMenuToggle" title="Menu">☰</button>
+  </div>
+
+  <!-- Mobile actions -->
+  <div class="mobile-top-actions">
+    <button class="icon-btn" id="darkToggleMob">🌙</button>
+    <button class="icon-btn" id="authBtnMob">👤</button>
+    <button class="cart-btn-mini" id="cartToggleMob">🛒<span class="cart-badge" id="cartCountMob">0</span></button>
+    <button class="hamburger-btn" id="mobileMenuBtn">☰</button>
+  </div>
+</header>
+
+<!-- Desktop side menu -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <span class="logo-main" style="font-size:1rem">Moje<span class="logo-orange">Krabice</span><span class="logo-dark">CZ</span></span>
+    <button class="side-close" id="sideClose">✕</button>
+  </div>
+  <nav class="side-nav">
+    <a href="#top-jidla" class="side-link">🏆 Nejoblíbenější</a>
+    <a href="#jidla" class="side-link">🍽️ Hlavní jídla</a>
+    <a href="#dezerty" class="side-link">🍰 Dezerty</a>
+    <a href="#snacky" class="side-link">🍟 Chipsy & Snacky</a>
+    <a href="#piti" class="side-link">🥤 Pití</a>
+    <a href="#oblibene" class="side-link">❤️ Oblíbené</a>
+    <a href="#oteviraci-doba" class="side-link">🕐 Otevírací doba</a>
+    <a href="#hodnoceni" class="side-link">⭐ Hodnocení</a>
+  </nav>
+  <div class="side-footer">
+    <button class="side-auth-btn" id="sideAuthBtn">👤 Přihlásit / Registrovat</button>
+  </div>
+</div>
+<div class="side-overlay" id="sideOverlay"></div>
+
+<!-- Mobile dropdown menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#top-jidla">🏆 Nejoblíbenější</a>
+  <a href="#jidla">🍽️ Jídla</a>
+  <a href="#dezerty">🍰 Dezerty</a>
+  <a href="#snacky">🍟 Snacky</a>
+  <a href="#piti">🥤 Pití</a>
+  <a href="#oblibene">❤️ Oblíbené</a>
+  <a href="#hodnoceni">⭐ Hodnocení</a>
+  <button class="mob-hours-btn" id="hoursToggleMob">
+    <span id="hoursStatusDotMob" class="hours-dot"></span> 🕐 Otevírací doba
+  </button>
+</div>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authOverlay"></div>
+<div class="auth-modal" id="authModal">
+  <button class="modal-close-btn" id="authClose">✕</button>
+
+  <!-- Login view -->
+  <div class="auth-view" id="loginView">
+    <div class="auth-logo">📦</div>
+    <h2>Přihlásit se</h2>
+    <p class="auth-sub">Přihlášením získáš přístup ke košíku</p>
+    <div class="form-group">
+      <label>Uživatelské jméno</label>
+      <input type="text" id="loginName" class="form-input" placeholder="Tvoje jméno"/>
+    </div>
+    <div class="form-group">
+      <label>Heslo</label>
+      <input type="password" id="loginPass" class="form-input" placeholder="Heslo"/>
+    </div>
+    <div class="auth-error" id="loginError"></div>
+    <button class="auth-submit-btn" id="loginBtn">Přihlásit se</button>
+    <div class="auth-switch">Nemáš účet? <span class="auth-link" id="goRegister">Registrovat se</span></div>
+    <div class="auth-switch"><span class="auth-link" id="goForgot">Zapomněl/a jsem heslo</span></div>
+  </div>
+
+  <!-- Register view -->
+  <div class="auth-view" id="registerView" style="display:none">
+    <div class="auth-logo">📦</div>
+    <h2>Registrace</h2>
+    <p class="auth-sub">Vytvoř si účet zdarma</p>
+    <div class="form-group">
+      <label>Jméno</label>
+      <input type="text" id="regName" class="form-input" placeholder="Tvoje jméno (zobrazí se na účtence)"/>
+    </div>
+    <div class="form-group">
+      <label>Email (pro obnovení hesla)</label>
+      <input type="email" id="regEmail" class="form-input" placeholder="tvuj@email.cz"/>
+    </div>
+    <div class="form-group">
+      <label>Heslo</label>
+      <input type="password" id="regPass" class="form-input" placeholder="Min. 4 znaky"/>
+    </div>
+    <div class="form-group">
+      <label>Potvrdit heslo</label>
+      <input type="password" id="regPass2" class="form-input" placeholder="Zopakuj heslo"/>
+    </div>
+    <div class="auth-error" id="registerError"></div>
+    <button class="auth-submit-btn" id="registerBtn">Registrovat se</button>
+    <div class="auth-switch">Máš účet? <span class="auth-link" id="goLogin">Přihlásit se</span></div>
+  </div>
+
+  <!-- Forgot password view -->
+  <div class="auth-view" id="forgotView" style="display:none">
+    <div class="auth-logo">🔑</div>
+    <h2>Zapomenuté heslo</h2>
+    <p class="auth-sub">Zadej svůj email a pošleme ti kód</p>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="forgotEmail" class="form-input" placeholder="tvuj@email.cz"/>
+    </div>
+    <div class="auth-error" id="forgotError"></div>
+    <button class="auth-submit-btn" id="forgotBtn">Odeslat kód</button>
+    <div class="auth-switch"><span class="auth-link" id="goLoginFromForgot">← Zpět na přihlášení</span></div>
+  </div>
+
+  <!-- Reset code view -->
+  <div class="auth-view" id="resetView" style="display:none">
+    <div class="auth-logo">📧</div>
+    <h2>Zadej kód</h2>
+    <p class="auth-sub" id="resetEmailInfo">Kód byl odeslán na tvůj email</p>
+    <div class="email-code-display" id="emailCodeDisplay" style="display:none">
+      <div class="email-code-label">📨 Simulace emailu — tvůj kód:</div>
+      <div class="email-code-value" id="emailCodeValue"></div>
+      <div class="email-code-note">V reálné aplikaci by přišel na email</div>
+    </div>
+    <div class="form-group">
+      <label>Ověřovací kód (6 číslic)</label>
+      <input type="text" id="resetCode" class="form-input" placeholder="123456" maxlength="6"/>
+    </div>
+    <div class="form-group">
+      <label>Nové heslo</label>
+      <input type="password" id="resetNewPass" class="form-input" placeholder="Nové heslo"/>
+    </div>
+    <div class="auth-error" id="resetError"></div>
+    <button class="auth-submit-btn" id="resetBtn">Nastavit nové heslo</button>
+  </div>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="modal-overlay" id="accountOverlay"></div>
+<div class="account-modal" id="accountModal">
+  <div class="account-modal-header">
+    <h3>⚙️ Nastavení účtu</h3>
+    <button class="modal-close-btn" id="accountClose">✕</button>
+  </div>
+  <div class="account-body">
+    <div class="account-avatar">👤</div>
+    <div class="account-name" id="accountName"></div>
+    <div class="account-email-display" id="accountEmailDisplay"></div>
+
+    <div class="account-section">
+      <div class="account-section-title">📧 Email pro obnovení hesla</div>
+      <div class="form-group">
+        <input type="email" id="accountEmailInput" class="form-input" placeholder="tvuj@email.cz"/>
+      </div>
+      <button class="account-save-btn" id="accountSaveEmail">Uložit email</button>
+    </div>
+
+    <div class="account-section">
+      <div class="account-section-title">🔑 Změna hesla</div>
+      <div class="form-group">
+        <input type="password" id="accountOldPass" class="form-input" placeholder="Stávající heslo"/>
+      </div>
+      <div class="form-group">
+        <input type="password" id="accountNewPass" class="form-input" placeholder="Nové heslo"/>
+      </div>
+      <button class="account-save-btn" id="accountSavePass">Změnit heslo</button>
+    </div>
+
+    <div class="account-section">
+      <div class="account-section-title">🎁 Slevový kód</div>
+      <div class="coupon-row">
+        <input type="text" id="couponInput" class="form-input" placeholder="Zadej kód (SLEVA10, SAVE20...)"/>
+        <button class="coupon-apply-btn" id="couponApply">Použít</button>
+      </div>
+      <div class="coupon-status" id="couponStatus"></div>
+    </div>
+
+    <button class="logout-btn" id="logoutBtn">🚪 Odhlásit se</button>
+  </div>
+</div>
+
+<!-- HOURS MODAL -->
+<div class="modal-overlay" id="hoursOverlay"></div>
+<div class="hours-modal" id="hoursModal">
+  <div class="hours-modal-header">
+    <div><h3>🕐 Otevírací doba</h3><p class="hours-modal-sub">MojeKrabiceCZ</p></div>
+    <button class="modal-close-btn" id="hoursClose">✕</button>
+  </div>
+  <div class="hours-modal-today" id="hoursModalToday"></div>
+  <div class="hours-modal-list">
+    <div class="hm-row" data-day="1"><span class="hm-day">Pondělí</span><span class="hm-time">8:00 – 17:00</span><span class="hm-badge open">Otevřeno</span></div>
+    <div class="hm-row" data-day="2"><span class="hm-day">Úterý</span><span class="hm-time">7:00 – 16:00</span><span class="hm-badge open">Otevřeno</span></div>
+    <div class="hm-row" data-day="3"><span class="hm-day">Středa</span><span class="hm-time">9:00 – 18:00</span><span class="hm-badge open">Otevřeno</span></div>
+    <div class="hm-row" data-day="4"><span class="hm-day">Čtvrtek</span><span class="hm-time">8:00 – 12:00</span><span class="hm-badge open">Otevřeno</span></div>
+    <div class="hm-row" data-day="5"><span class="hm-day">Pátek</span><span class="hm-time">6:00 – 20:00</span><span class="hm-badge open">Otevřeno</span></div>
+    <div class="hm-row" data-day="6"><span class="hm-day">Sobota</span><span class="hm-time">10:00 – 12:00</span><span class="hm-badge open">Otevřeno</span></div>
+    <div class="hm-row" data-day="0"><span class="hm-day">Neděle</span><span class="hm-time">—</span><span class="hm-badge closed">Zavřeno</span></div>
+  </div>
+</div>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="hero-pill">🚀 Rychlé doručení · Čerstvé každý den</span>
+      <h1>Objednávej jídlo<br/><span class="hero-highlight">jednoduše & rychle</span></h1>
+      <p class="hero-sub">Vyber si z naší nabídky. Přihlas se a objednávej!</p>
+      <div class="hero-btns">
+        <a href="#top-jidla" class="hero-cta">Procházet nabídku →</a>
+        <button class="hero-cta-secondary" id="heroAuthBtn">👤 Přihlásit se</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-box">
+        <span>📦</span>
+        <span>Moje<span style="color:var(--orange)">Krabice</span>CZ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGIN REQUIRED BANNER -->
+<div class="login-banner" id="loginBanner">
+  <span>🔒 Pro přidání do košíku se musíš <strong>přihlásit nebo registrovat</strong></span>
+  <button id="loginBannerBtn">Přihlásit se →</button>
+</div>
+
+<!-- SEARCH & FILTER -->
+<div class="search-section">
+  <div class="search-inner">
+    <div class="search-row">
+      <div class="search-input-wrap">
+        <span>🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Hledej jídlo, dezert, snack..."/>
+        <button class="search-clear" id="searchClear">✕</button>
+      </div>
+      <div class="coupon-inline" id="couponInline">
+        <input type="text" id="couponQuick" class="form-input coupon-quick-input" placeholder="🏷️ Slevový kód"/>
+        <button class="coupon-apply-btn" id="couponQuickApply">Použít</button>
+      </div>
+    </div>
+    <div class="filter-chips">
+      <button class="filter-chip active" data-filter="vse">Vše</button>
+      <button class="filter-chip" data-filter="jidla">🍽️ Jídla</button>
+      <button class="filter-chip" data-filter="dezerty">🍰 Dezerty</button>
+      <button class="filter-chip" data-filter="snacky">🍟 Snacky</button>
+      <button class="filter-chip" data-filter="piti">🥤 Pití</button>
+      <button class="filter-chip" data-filter="bestseller">🔥 Bestseller</button>
+      <button class="filter-chip" data-filter="novinka">✨ Novinka</button>
+    </div>
+  </div>
+  <div class="search-results-wrap" id="searchResultsWrap" style="display:none">
+    <div class="search-results-header" id="searchResultsHeader"></div>
+    <div class="products-grid" id="searchResultsGrid"></div>
+  </div>
+</div>
+
+<!-- TOP JÍDLA -->
+<section class="section" id="top-jidla">
+  <div class="section-header"><h2>🏆 Nejoblíbenější jídla</h2><p>Co zákazníci objednávají nejčastěji</p></div>
+  <div class="top-grid" id="topFoodsGrid"></div>
+</section>
+
+<!-- JÍDLA -->
+<section class="section" id="jidla">
+  <div class="section-header"><h2>🍽️ Hlavní jídla</h2><p>Čerstvě připravená denně</p></div>
+  <div class="products-grid" id="grid-jidla"></div>
+</section>
+
+<!-- DEZERTY -->
+<section class="section" id="dezerty">
+  <div class="section-header"><h2>🍰 Dezerty</h2><p>Sladká tečka za každým jídlem</p></div>
+  <div class="products-grid" id="grid-dezerty"></div>
+</section>
+
+<!-- SNACKY -->
+<section class="section" id="snacky">
+  <div class="section-header"><h2>🍟 Chipsy & Snacky</h2><p>Na zub kdykoliv</p></div>
+  <div class="products-grid" id="grid-snacky"></div>
+</section>
+
+<!-- PITÍ -->
+<section class="section" id="piti">
+  <div class="section-header"><h2>🥤 Pití</h2><p>Osvěžení k objednávce</p></div>
+  <div class="products-grid" id="grid-piti"></div>
+</section>
+
+<!-- OBLÍBENÉ -->
+<section class="section" id="oblibene">
+  <div class="section-header"><h2>❤️ Moje oblíbené</h2><p>Jídla označená srdíčkem</p></div>
+  <div id="oblibeneEmpty" class="oblibene-empty show"><span>💔</span><p>Zatím žádné oblíbené</p><small>Klikni na 🤍 u libovolného jídla</small></div>
+  <div class="products-grid" id="grid-oblibene"></div>
+</section>
+
+<!-- KOŠÍK PANEL -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>🛒 Tvůj košík</h3>
+    <button class="modal-close-btn" id="cartClose">✕</button>
+  </div>
+  <div class="coupon-cart-row" id="couponCartRow">
+    <div class="coupon-active" id="couponActive" style="display:none"></div>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><span>📦</span><p>Košík je prázdný</p><small>Přihlas se a objednávej!</small></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span>Mezisoučet:</span><span id="cartSubtotal">0 Kč</span>
+    </div>
+    <div class="cart-discount-row" id="cartDiscountRow" style="display:none">
+      <span class="discount-label">🏷️ Sleva:</span><span class="discount-val" id="cartDiscountVal">-0 Kč</span>
+    </div>
+    <div class="cart-total">
+      <span>Celkem:</span><strong id="cartTotal">0 Kč</strong>
+    </div>
+    <button class="btn-screenshot" id="btnScreenshot">📸 Stáhnout účtenku</button>
+  </div>
+</aside>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- DOBA OTEVŘENÍ -->
+<section class="section" id="oteviraci-doba">
+  <div class="section-header"><h2>🕐 Doba otevření</h2><p>Kdy nás najdeš online</p></div>
+  <div class="hours-card">
+    <div class="hours-today" id="hoursToday"></div>
+    <div class="hours-list">
+      <div class="hours-row" data-day="1"><span class="hours-day">Pondělí</span><span class="hours-time">8:00 – 17:00</span><span class="hours-badge open">Otevřeno</span></div>
+      <div class="hours-row" data-day="2"><span class="hours-day">Úterý</span><span class="hours-time">7:00 – 16:00</span><span class="hours-badge open">Otevřeno</span></div>
+      <div class="hours-row" data-day="3"><span class="hours-day">Středa</span><span class="hours-time">9:00 – 18:00</span><span class="hours-badge open">Otevřeno</span></div>
+      <div class="hours-row" data-day="4"><span class="hours-day">Čtvrtek</span><span class="hours-time">8:00 – 12:00</span><span class="hours-badge open">Otevřeno</span></div>
+      <div class="hours-row" data-day="5"><span class="hours-day">Pátek</span><span class="hours-time">6:00 – 20:00</span><span class="hours-badge open">Otevřeno</span></div>
+      <div class="hours-row" data-day="6"><span class="hours-day">Sobota</span><span class="hours-time">10:00 – 12:00</span><span class="hours-badge open">Otevřeno</span></div>
+      <div class="hours-row" data-day="0"><span class="hours-day">Neděle</span><span class="hours-time">—</span><span class="hours-badge closed">Zavřeno</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HODNOCENÍ -->
+<section class="section" id="hodnoceni">
+  <div class="section-header"><h2>⭐ Ohodnoť naši službu</h2><p>Jak se ti líbí MojeKrabiceCZ?</p></div>
+  <div class="rating-card">
+    <div class="rating-mood">
+      <span class="mood-emoji" id="moodEmoji">🤔</span>
+      <span class="mood-text" id="moodText">Vyber hodnocení...</span>
+    </div>
+    <div class="stars-wrapper">
+      <div class="stars-row" id="starsRow"></div>
+      <div class="rating-value" id="ratingValue">0 / 5</div>
+    </div>
+    <div class="rating-comment-wrap">
+      <textarea class="rating-comment" id="ratingComment" placeholder="Napiš nám svůj komentář (volitelné)..." rows="3"></textarea>
+    </div>
+    <button class="btn-rating-screenshot" id="btnRatingScreenshot" disabled>📸 Stáhnout hodnocení jako Screenshot</button>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-main" style="font-size:1.1rem">Moje<span class="logo-orange">Krabice</span><span style="color:rgba(255,255,255,.8)">CZ</span></span>
+    <p>© 2025 MojeKrabiceCZ · Všechna práva vyhrazena</p>
+  </div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<div class="chat-widget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar-header">👷</div>
+        <div>
+          <div class="chat-header-name">Podpora MojeKrabiceCZ</div>
+          <div class="chat-header-status"><span class="chat-online-dot"></span> Online</div>
+        </div>
+      </div>
+      <button class="chat-close-btn" id="chatClose">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-wrap">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Napiš zprávu..."/>
+      <button class="chat-send-btn" id="chatSend">➤</button>
+    </div>
+  </div>
+  <button class="chat-toggle-btn" id="chatToggle">
+    💬 <span class="chat-unread-badge" id="chatBadge" style="display:none">1</span>
+  </button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
